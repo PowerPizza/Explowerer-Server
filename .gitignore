@@ -1,0 +1,6 @@
+production
+backend/.idea
+backend/target_work/my_env
+backend/build
+backend/dist
+backend/*.spec

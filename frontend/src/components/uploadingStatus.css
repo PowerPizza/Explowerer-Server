@@ -1,0 +1,52 @@
+.US_main_body{
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.status_view{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    box-shadow: 0px 0px 5px 0px magenta;
+    border-radius: 10px;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    padding: 5px;
+}
+
+.status_view .text_uploading{
+    content: ".";
+    text-align: center;
+    margin-top: 0;
+    color: blue;
+    &::after{
+        content: ".";
+        animation: uploading_text_anim 0.8s linear infinite;
+    }
+}
+@keyframes uploading_text_anim {
+    0% {content: ".";}
+    50% {content: "..";}
+    100% {content: "...";}
+}
+
+.status_view .upload_progress{
+    appearance: none;
+    height: 30px;
+    width: 100%;
+}
+.upload_progress::-webkit-progress-bar{
+    background-color: rgba(128, 128, 128, 0.719);
+}
+.upload_progress::-webkit-progress-value{
+    background: linear-gradient(45deg, lime, rgb(30, 165, 30), green, lime, rgb(30, 165, 30), green);
+}

@@ -1,0 +1,240 @@
+.file_exp_main_body{
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(71, 71, 71);
+}
+
+.file_exp_main_body .drive_list{
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  height: 100%;
+  background-color: rgb(66, 58, 58);
+  z-index: 1;
+}
+
+.file_exp_main_body .drive_list .target_list{
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(117, 117, 117);
+  border-radius: 5px;
+  height: 100%;
+  overflow-y: auto;
+  margin: 2px;
+  user-select: none;
+  &::-webkit-scrollbar{
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: lightgray;
+  }
+  &::-webkit-scrollbar-track{
+    background-color: rgba(49, 49, 49, 0.521);
+  }
+}
+.file_exp_main_body .drive_list .target_list .targets_title{
+  font-size: 1.2rem;
+  color: white;
+  margin: 0;
+  padding-left: 20px;
+  padding-bottom: 5px;
+  border-bottom: 3px solid rgb(29, 29, 29);
+}
+
+.file_exp_main_body .drive_list .target_list .text_no_victim{
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 500;
+  white-space: nowrap;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+  width: 250px;
+}
+
+.file_exp_main_body .drive_list .list_of_drives{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid yellow;
+  margin: 5px;
+  border-radius: 5px;
+  padding-top: 15px;
+  margin-top: 15px;
+  height: 100%;
+}
+.file_exp_main_body .drive_list .list_of_drives::before{
+  content: "Drives";
+  position: absolute;
+  margin-top: -27px;
+  margin-left: 10px;
+  color: white;
+  background-color: black;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid yellow;
+}
+.file_exp_main_body .drive_list .list_of_drives .reload_drives{
+  margin-left: auto;
+  margin-right: 5px;
+  margin-top: -10px;
+  cursor: pointer;
+  &:hover{
+      color: white;
+  }
+}
+.file_exp_main_body .drive_list .list_of_drives .drive_ele{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 4px ridge gray;
+  margin: 5px;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  user-select: none;
+  transition: all 0.1s ease-in;
+  &:hover{
+      background-color: rgba(255, 255, 255, 0.212);
+  }
+}
+.file_exp_main_body .drive_list .list_of_drives .drive_ele .drive_name{
+  color: lime;
+  font-size: 1.7rem;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.file_exp_main_body .drive_list .list_of_drives .drive_ele .drive_size{
+  margin-left: auto;
+  margin-top: auto;
+  font-size: 1rem;
+  color: cyan;
+  text-align: right;
+}
+.file_exp_main_body .drive_list .list_of_drives .drive_ele .drive_ico{
+  margin-bottom: 5px;
+}
+
+.file_exp_main_body .other_content{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.file_exp_main_body .other_content .top_header{
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #383838;
+  box-shadow: 0px 0px 2px 0px gray;
+  *{
+      cursor: pointer;
+  }
+}
+.file_exp_main_body .other_content .top_header .path_entry{
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid gray;
+  font-size: 1.3rem;
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+  outline: none;
+  color: cyan;
+  cursor: text;
+}
+
+.file_exp_main_body .other_content .file_folder_list{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.file_exp_main_body .other_content .file_folder_list .previous{
+  user-select: none;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: white;
+  height: 60px;
+  cursor: pointer;
+  &:hover{
+      background-color: #7c7c7c5d;
+  }
+}
+
+.file_exp_main_body .other_content .file_folder_list .actual_list{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+  &::-webkit-scrollbar{
+      width: 5px;
+  }
+  &::-webkit-scrollbar-track{
+      background-color: lightgray;
+  }
+  &::-webkit-scrollbar-thumb{
+      background-color: gray;
+  }
+}
+.file_exp_main_body .other_content .file_folder_list .actual_list .holder{
+  height: 0;
+}
+
+.download_progress_win{
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.download_progress_win .progress_ui{
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  height: 270px;
+  background-color: white;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  box-shadow: 0px 0px 4px 0px lightgray;
+  border-radius: 5px;
+  padding: 5px;
+}
+.download_progress_win .progress_ui .win_heading{
+  margin: 0;
+  text-align: center;
+  color: blue;
+}
+.download_progress_win .progress_ui .file_name{
+  color: purple;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-top: 5px;
+  word-wrap: break-word;
+}
+.download_progress_win .progress_ui .chunk_info{
+  font-size: 1.2rem;
+  margin: auto;
+}
+.download_progress_win .progress_ui progress{
+  appearance: none;
+  border: 1px solid green;
+  width: 100%;
+  height: fit-content;
+  margin-bottom: auto;
+}
+.download_progress_win .progress_ui progress::-webkit-progress-bar{
+  background-color: lightgray;
+  height: 30px;
+}
+.download_progress_win .progress_ui progress::-webkit-progress-value{
+  background: linear-gradient(45deg, blue, cyan, blue, cyan);
+}

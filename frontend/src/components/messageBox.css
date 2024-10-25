@@ -1,0 +1,41 @@
+.msg_box_main_body{
+    display: flex;
+    min-width: 300px;
+    max-width: 350px;
+    min-height: 80px;
+    max-height: 80px;
+    background-color: rgb(92, 92, 92);
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgb(26, 26, 26);
+}
+
+.msg_box_main_body .close{
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.msg_box_main_body .message_icon{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.msg_box_main_body span{
+    margin-top: auto;
+    margin-bottom: auto;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    overflow-y: auto;
+    word-break: break-all;
+    &::-webkit-scrollbar{
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: gray;
+    }
+    &::-webkit-scrollbar-track{
+        background-color: lightgray;
+    }
+}

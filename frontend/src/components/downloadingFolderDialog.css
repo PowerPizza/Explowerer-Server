@@ -1,0 +1,83 @@
+.df_dialog_main_body{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.df_dialog_main_body .df_dialog_content{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 300px;
+    min-height: 140px;
+    max-height: fit-content;
+    background-color: white;
+    box-shadow: 0px 0px 4px 2px gray;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    user-select: none;
+}
+.df_dialog_main_body .df_dialog_content .circle_{
+    width: 170px;
+    aspect-ratio: 1/1;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+}
+.df_dialog_main_body .df_dialog_content .dialog_heading{
+    font-size: 1.4rem;
+    color: purple;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+}
+
+.df_dialog_main_body .df_dialog_content .compressing_txt{
+    color: blue;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.df_dialog_main_body .df_dialog_content .compressing_txt::after{
+    content: ".";
+    animation: compressing__ 2s infinite linear;
+}
+@keyframes compressing__ {
+    0% {content: ".";}
+    50% {content: "..";}
+    100% {content: "...";}
+}
+
+.df_dialog_main_body .df_dialog_content .note_{
+    text-align: center;
+}
+
+.df_dialog_main_body .df_dialog_content .cancle_btn{
+    width: 120px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px;
+    border: 4px solid transparent;
+    color: white;
+    transition: all 0.2s;
+    cursor: pointer;
+    background-color: #ff473c;
+    margin-left: auto;
+    margin-top: 10px;
+    &:hover{
+        border-color: #ff473c;
+        background-color: transparent;
+        color: #ff473c;
+    }
+}

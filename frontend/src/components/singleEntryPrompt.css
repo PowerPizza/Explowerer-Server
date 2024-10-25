@@ -1,0 +1,82 @@
+.entry_prompt_main_body{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.entry_prompt_main_body .prompt_container{
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 300px;
+    min-height: 140px;
+    max-height: fit-content;
+    background-color: white;
+    box-shadow: 0px 0px 4px 2px gray;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.entry_prompt_main_body .prompt_container .txt_msg{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgb(0, 68, 255);
+    margin-top: 5px;
+}
+
+.entry_prompt_main_body .prompt_container .prompt{
+    outline: none;
+    border: 1px solid gray;
+    font-size: 1.2rem;
+    padding: 4px;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color:rgb(37, 37, 37);
+    margin-left: 15px;
+    &:focus{
+        box-shadow: 0px 0px 4px 2px rgb(55, 183, 243);
+    }
+}
+
+.entry_prompt_main_body .prompt_container .options_{
+    display: flex;
+    margin-top: auto;
+}
+.entry_prompt_main_body .prompt_container .options_ button{
+    width: 120px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px;
+    border: 4px solid transparent;
+    color: white;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.entry_prompt_main_body .prompt_container .options_ .cancle_btn{
+    background-color: #ff473c;
+    &:hover{
+        border-color: #ff473c;
+        background-color: transparent;
+        color: #ff473c;
+    }
+}
+.entry_prompt_main_body .prompt_container .options_ .ok_btn{
+    background-color: #35ce75;
+    margin-left: auto;
+    &:hover{
+        border-color: #35ce75;
+        background-color: transparent;
+        color: #35ce75;
+    }
+}

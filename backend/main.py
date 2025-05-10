@@ -88,4 +88,4 @@ web_socket.on_namespace(FileExplorerPoint("/file_explorer"))
 
 if __name__ == '__main__':
     print("**LOCAL SERVER RUNNING AT : http://127.0.0.1:5000")
-    web_socket.run(app, host="127.0.0.1", port=5000, allow_unsafe_werkzeug=True)
+    web_socket.run(app, host="127.0.0.1", port=7866, allow_unsafe_werkzeug=True)

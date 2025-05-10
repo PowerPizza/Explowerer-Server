@@ -1,23 +1,15 @@
-import json
 import os
-import ngrok
-import requests
 from dotenv import load_dotenv
 from flask import Flask, request, render_template
 from flask_socketio import SocketIO, emit
 from flask_socketio.namespace import Namespace
-# import engineio  # ONLY FOR PRODUCTION
-# from engineio.async_drivers import gevent  # ONLY FOR PRODUCTION
 
 load_dotenv()
 
-listener = ngrok.forward(5000, authtoken_from_env=True)
-resp = requests.post(f"{os.getenv('NGROK_LINK_FORWARD_URL')}/set_url", json.dumps({"url": listener.url()+"/"}))
-
-app = Flask(__name__)
-# app = Flask(__name__, template_folder=os.getcwd(), static_folder=os.getcwd(), static_url_path="/")    # ONLY FOR PRODUCTION
+# app = Flask(__name__)
+app = Flask(__name__, template_folder="../build", static_folder="../build", static_url_path="/")    # ONLY FOR PRODUCTION
 app.secret_key = os.getenv("APP_SECRET_KEY")
-web_socket = SocketIO(app, cors_allowed_origins=["http://127.0.0.1:5000", listener.url()], max_http_buffer_size=25000000)
+web_socket = SocketIO(app, cors_allowed_origins=["http://127.0.0.1:5000"], max_http_buffer_size=25000000)
 
 @app.route("/")
 def home():
@@ -66,6 +58,12 @@ class FileExplorerPoint(Namespace):
     def on_download_file(self, data_):
         emit("download_file", data_, to=self.currentlyConnected)
 
+    def on_upload_file(self, data_):
+        data_["to_"] = request.sid
+        emit("upload_file", data_, to=self.currentlyConnected)
+    def on_next_chunk(self, data_):
+        emit("next_chunk", data_, to=data_["to_"])
+
     def on_delete_media(self, data_):
         emit("delete_media", data_, to=self.currentlyConnected)
 
@@ -89,7 +87,5 @@ class FileExplorerPoint(Namespace):
 web_socket.on_namespace(FileExplorerPoint("/file_explorer"))
 
 if __name__ == '__main__':
-    print(f"**STATUS NGROK HOSTING : {resp.text}")
-    print(f"**NGROK SERVER RUNNING AT (WAN) : {listener.url()}")
     print("**LOCAL SERVER RUNNING AT : http://127.0.0.1:5000")
     web_socket.run(app, host="127.0.0.1", port=5000, allow_unsafe_werkzeug=True)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { ArrowLeftCircle, ArrowUpCircleSolid, FolderPlus, HardDrive, PagePlus, RefreshCircle } from 'iconoir-react'
+import { ArrowLeftCircle, ArrowUpCircleSolid, FolderPlus, HardDrive, PagePlus, RefreshCircle, Search, Upload } from 'iconoir-react'
 import { io } from 'socket.io-client';
 import FolderRow from './components/FolderRow';
 import FileRow from './components/FileRow';
@@ -10,8 +10,12 @@ import OkayCancleDialog from './components/OkayCancleDialog';
 import SingleEntryPrompt from './components/SingleEntryPrompt';
 import DownloadingFolderDialog from './components/DownloadingFolderDialog';
 import TargetElement from './components/TargetElement';
+import UploadingStatus from './components/UploadingStatus';
+import SearchWindow from './components/SearchWindow';
 
 let file_writer = null;
+let currently_uploading_file = null;
+let chunk_size = 3000000;
 export default class App extends Component {
   constructor() {
     super();
@@ -27,6 +31,8 @@ export default class App extends Component {
       askOkCancleDialog: null,
       entryPromptDialog: null,
       folderDownloadingDialog: null,
+      uploadingDialog: null,
+      searchOpened: false
     }
 
     this.file_explores_ws = io("/file_explorer");
@@ -37,6 +43,17 @@ export default class App extends Component {
 
     this.file_explores_ws.on("list_targets", (data_) => {
       this.setState({ targets_available: data_["targets"] });
+    });
+
+    this.file_explores_ws.on("next_chunk", (data_)=>{
+      if (!currently_uploading_file){
+        this.setState({uploadingDialog: null});
+        return;
+      }
+      data_["chunk"] = currently_uploading_file.slice(data_["chunk_from"], data_["chunk_to"]);
+      data_["init"] = false;  // to bypass already existing file check at target side.
+      this.setState({uploadingDialog: <UploadingStatus max_={Math.floor(currently_uploading_file.size/chunk_size)} value_={Math.floor((data_['chunk_from']+1)/chunk_size)} file_name={currently_uploading_file.name} file_size={this.fileSizeWithUnit(currently_uploading_file.size, 2)} onCancleUpload={this.onCancleUploadFile}/>})
+      this.file_explores_ws.emit("upload_file", data_);
     })
 
     this.file_explores_ws.on("response_channel", (data_) => {
@@ -74,6 +91,11 @@ export default class App extends Component {
         this.setState({selected_target: data_["sid"]});
         this.createToastMsg(`Target '${data_["sid"]}' selected`);
         this.onReloadDriveList();
+      }
+      else if (data_["type"] === "file_uploaded"){
+        currently_uploading_file = null;
+        this.setState({uploadingDialog: null});
+        this.createToastMsg(`🟢 Success : ${data_["msg"]}`);
       }
       else if (data_["type"] === "error_msg") {
         this.createToastMsg(`🔴 Error : ${data_["error"]}`);
@@ -215,6 +237,29 @@ export default class App extends Component {
     this.setState({ folderDownloadingDialog: <DownloadingFolderDialog msg="Preparing Download" on_cancle={on_cancle} key={"download_win1"} /> });
   }
 
+  onCancleUploadFile = ()=>{
+    currently_uploading_file = null;
+    this.setState({uploadingDialog: null});
+  }
+  onUploadFile = ()=>{
+    let file_selector = document.createElement("input");
+    file_selector.type = "file"
+    file_selector.click();
+    file_selector.onchange = ()=>{
+      currently_uploading_file = file_selector.files[0];
+      let to_send = {"file_name": currently_uploading_file.name, "file_size": currently_uploading_file.size, "chunk_size": chunk_size, "chunk_from": 0, "chunk_to": chunk_size, "chunk": currently_uploading_file.slice(0, chunk_size), "init": true};
+      this.setState({uploadingDialog: <UploadingStatus max_={Math.floor(currently_uploading_file.size/chunk_size)} value_={Math.floor((to_send['chunk_from']+1)/chunk_size)} file_name={currently_uploading_file.name} file_size={this.fileSizeWithUnit(currently_uploading_file.size, 2)} onCancleUpload={this.onCancleUploadFile}/>})
+      this.file_explores_ws.emit("upload_file", to_send);
+    }
+  }
+
+  toggleSearch = ()=>{
+    this.setState({searchOpened: !this.state.searchOpened});
+  }
+  onStartSearch = (to_search)=>{
+    console.log(to_search)
+  }
+
   render() {
     return (
       <div className='file_exp_main_body'>
@@ -233,6 +278,7 @@ export default class App extends Component {
         {this.state.askOkCancleDialog}
         {this.state.entryPromptDialog}
         {this.state.folderDownloadingDialog}
+        {this.state.uploadingDialog}
 
         <div className='drive_list'>
           <div className='target_list'>
@@ -263,13 +309,17 @@ export default class App extends Component {
             })}
           </div>
         </div>
+        {this.state.searchOpened ? <SearchWindow toggleSearch={this.toggleSearch} onStartSearch={this.onStartSearch} /> : 
         <div className='other_content'>
           <div className='top_header'>
             <ArrowLeftCircle width={50} height={50} color='cyan' strokeWidth={2.3} onClick={this.onPreviousDir} />
             <input type="text" className='path_entry' value={this.state.cwd} onChange={this.onChangePathInput} onKeyDown={this.onSendInputPath} />
+            <Search width={45} height={45} color='cyan' style={{ marginRight: "5px" }} strokeWidth={2.3} onClick={this.toggleSearch} />
+            <Upload width={45} height={45} color='cyan' style={{ marginRight: "5px" }} strokeWidth={2.3} onClick={this.onUploadFile} />
             <PagePlus width={45} height={45} color='cyan' style={{ marginRight: "5px" }} strokeWidth={2.3} onClick={this.onCreateNewFile} />
             <FolderPlus width={45} height={45} color='cyan' style={{ marginRight: "5px" }} strokeWidth={2.3} onClick={this.onCreateNewFolder} />
           </div>
+
           <div className='file_folder_list'>
             <span className='previous' onClick={this.onPreviousDir}>
               <ArrowUpCircleSolid width={40} height={40} color='white' />
@@ -286,7 +336,7 @@ export default class App extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> }
       </div>
     )
   }

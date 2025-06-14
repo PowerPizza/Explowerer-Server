@@ -97,3 +97,8 @@ Use the **Render.com** URL you copied in **Section 1** to open the web page wher
 Note: Target devices will appear in the menu only when they are powered on and connected to the internet.
 
 > If a target device restarts, the connection will automatically be re-established with your web server. So, there's no need to worry about restarts.
+
+# License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)  
+This project is open-source and available under the [MIT License](./LICENSE).

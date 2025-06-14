@@ -1,14 +1,10 @@
-import os
-from dotenv import load_dotenv
 from flask import Flask, request, render_template
 from flask_socketio import SocketIO, emit
 from flask_socketio.namespace import Namespace
+from uuid import uuid4
 
-load_dotenv()
-
-# app = Flask(__name__)
 app = Flask(__name__, template_folder="../build", static_folder="../build", static_url_path="/")    # ONLY FOR PRODUCTION
-app.secret_key = os.getenv("APP_SECRET_KEY")
+app.secret_key = str(uuid4()).replace("-", "")
 web_socket = SocketIO(app, cors_allowed_origins="*", max_http_buffer_size=25000000)
 
 @app.route("/")
@@ -88,4 +84,4 @@ web_socket.on_namespace(FileExplorerPoint("/file_explorer"))
 
 if __name__ == '__main__':
     print("**LOCAL SERVER RUNNING AT : http://127.0.0.1:5000")
-    web_socket.run(app, host="127.0.0.1", port=7879, allow_unsafe_werkzeug=True)
+    web_socket.run(app, host="127.0.0.1", port=5000, allow_unsafe_werkzeug=True)

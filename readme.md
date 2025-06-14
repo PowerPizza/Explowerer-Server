@@ -25,7 +25,7 @@ Note: This method uses Render.com to host the web server for this tool.
 * Click `New` in the top-right corner.
 * Select `Web Service`
 * Choose `Public Git Repository`
-* Paste the following URL into the input field and click Connect `https://github.com/PowerPizza/Explowrer-Spyware`
+* Paste the following URL into the input field and click Connect `https://github.com/PowerPizza/Explowerer-Server`
 * Under `Name`, enter any name you prefer.  
 _Note: This name will be used as the subdomain prefix for your web server._
 * In the Language field, select `Python` or `Python 3`

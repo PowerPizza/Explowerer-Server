@@ -47,7 +47,6 @@ def get_mac():
 while 1:
     try:
         # url_ = "http://127.0.0.1:5000"  # JUST FOR DEVELOPMENT
-        # url_ = "https://file-explowerer.onrender.com/"  # JUST FOR TESTING
         url_ = "__PLACE_RENDER_URL_HERE__"  # REPLACEMENT SHOULD BE DONE HERE
 
         ws = socketio.Client()

